@@ -8,7 +8,7 @@ namespace WebApplication1.Models
 {
     public class UserContext : IdentityDbContext<User>
     {
-        public DbSet<User> users { get; set; }
+        public DbSet<User> Users { get; set; }
         public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
             Database.EnsureCreated();

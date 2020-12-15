@@ -13,23 +13,22 @@ namespace WebApplication1.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Год рождения")]
-        public int Year { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Login")]
+        public string Login { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [Required]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         [DataType(DataType.Password)]
-        [Display(Name = "Подтвердить пароль")]
+        [Display(Name = "Confirm password")]
         public string PasswordConfirm { get; set; }
-
-        public string name { get; set; }
-        public string email { get; set; }
-        public string login { get; set; }
-        public string password { get; set; }
     }
 }
