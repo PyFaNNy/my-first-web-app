@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User {id=idS++, email = model.Email, name = model.Name,login=model.Login ,dateReg=DateTime.Now, dateLog=DateTime.Now, status="active" };
+                User user = new User {Email = model.Email, UserName = model.Name,Login=model.Login ,dateReg=DateTime.Now, dateLog=DateTime.Now, Status="active" };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

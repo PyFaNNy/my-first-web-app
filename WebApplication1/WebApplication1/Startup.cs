@@ -28,7 +28,7 @@ namespace WebApplication1
             services.AddDbContext<UserContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User,Role>()
                 .AddEntityFrameworkStores<UserContext>();
 
             services.AddControllersWithViews();
@@ -55,3 +55,4 @@ namespace WebApplication1
         }
     }
 }
+

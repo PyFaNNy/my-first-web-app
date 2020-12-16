@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 namespace WebApplication1.Models
 {
-    public class UserContext : IdentityDbContext<User>
+    public class UserContext : IdentityDbContext<User, Role , Guid>
     {
-        public DbSet<User> Users { get; set; }
-        public UserContext(DbContextOptions<UserContext> options) : base(options)
+        public DbSet<User> User { get; set; }
+        public UserContext(DbContextOptions<UserContext> dbContextOptions) : base(dbContextOptions)
         {
-            Database.EnsureCreated();
+          Database.EnsureCreated();
         }
     }
 }
