@@ -13,11 +13,11 @@ namespace WebApplication1.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "Login")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Login")]
+        [Display(Name = "Name")]
         public string Login { get; set; }
 
         [Required]
