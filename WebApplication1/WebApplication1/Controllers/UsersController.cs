@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using WebApplication1.Models;
 using WebApplication1.ViewModels;
 using WebApplication1.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication1.Controllers
 {
@@ -16,7 +17,7 @@ namespace WebApplication1.Controllers
         {
             _userManager = userManager;
         }
-
+        [Authorize]
         public IActionResult Index() => View(_userManager.Users.ToList());
 
         public IActionResult Create() => View();

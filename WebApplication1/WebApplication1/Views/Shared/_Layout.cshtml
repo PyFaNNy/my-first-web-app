@@ -11,18 +11,34 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApplication2</a>
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="DateBase">DateBase</a>
-                <div class="navbar-collapse collapse d-sm-inline-flex">
+            <div class="container float-left">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Users" asp-action="Index">DateBase</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex ">
+                    @if (User.Identity.IsAuthenticated)
+                    {
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            <p class="text-light">@User.Identity.Name</p>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                <input class="alert-light" type="submit" value="Log Off" />
+                            </form>
                         </li>
                     </ul>
+                    }
+                    else
+                    {
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                </ul>
+                    }
                 </div>
             </div>
         </nav>
