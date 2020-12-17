@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User {Email = model.Email, UserName = model.Name,Login=model.Login ,dateReg=DateTime.Now, dateLog=DateTime.Now, Status="active" };
+                User user = new User {Email = model.Email, UserName = model.Name,Login=model.Login ,dateReg=DateTime.Now, dateLog=DateTime.Now, Status="block" };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -62,23 +62,33 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
-                if (result.Succeeded)
+                var user = await _userManager.FindByNameAsync(model.Login);
+                if (user.Status.Equals("block"))
                 {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    ModelState.AddModelError("", "User is blocked");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Incorrect login and (or) password");
+                    var result =
+                            await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
+                    if (result.Succeeded)
+                    {
+                            // проверяем, принадлежит ли URL приложению
+                            if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
+                            {
+                                return Redirect(model.ReturnUrl);
+                            }
+                            else
+                            {
+                                user.dateLog = DateTime.Now;
+                                await _userManager.UpdateAsync(user);
+                                return RedirectToAction("Index", "Home");
+                            }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Incorrect login and (or) password");
+                    }
                 }
             }
             return View(model);

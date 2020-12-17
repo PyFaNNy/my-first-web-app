@@ -20,68 +20,19 @@ namespace WebApplication1.Controllers
         [Authorize]
         public IActionResult Index() => View(_userManager.Users.ToList());
 
-        public IActionResult Create() => View();
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateUserViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = new User { Email = model.Email, UserName = model.Email, };
-                var result = await _userManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
-            }
-            return View(model);
-        }
-
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Block(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
-            EditUserViewModel model = new EditUserViewModel {   };
-            return View(model);
+            user.Status="block";
+            await _userManager.UpdateAsync(user);
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Edit(EditUserViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = null; //await _userManager.FindByIdAsync();
-                if (user != null)
-                {
-                    user.Email = model.Email;
-                    user.UserName = model.Email;
-
-                    var result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
-                    }
-                }
-            }
-            return View(model);
-        }
 
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
