@@ -15,7 +15,6 @@ namespace WebApplication1.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private static int idS = 1;
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
@@ -31,7 +30,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User {Email = model.Email, UserName = model.Name,Login=model.Login ,dateReg=DateTime.Now, dateLog=DateTime.Now, Status="block" };
+                User user = new User {Email = model.Email, UserName = model.Name,Login=model.Login ,dateReg=DateTime.Now, dateLog=DateTime.Now, Status="active" };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

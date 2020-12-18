@@ -3,11 +3,11 @@
     ViewBag.Title = "List of Users";
 }
 
+<form id='form1' method="post">
+    <button type="submit" asp-controller="Users" asp-action="Delete">Delete</button>
+    <button type="submit" asp-controller="Users" asp-action="Block">Block</button>
+    <button type="submit" asp-controller="Users" asp-action="UnBlock">UnBlock</button>
 
-<a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Delete">Delete</a>
-<a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Delete">Block</a>
-<a class="navbar-brand" asp-area="" asp-controller="User" asp-action="Delete">Unblock</a>
-<form id='form1'>
     <table class="table table-bordered table-checks">
         <tr>
             <th>Email</th>
@@ -27,7 +27,7 @@
                 <td>@user.Status</td>
                 <td>@user.dateLog</td>
                 <td>@user.dateReg</td>
-                <td><input type="checkbox" class="qwe" name="cb"  /></td>
+                <td><input type="checkbox" class="qwe" name="selectedUsers" value="@user.UserName" /></td>
             </tr>
         }
     </table>
